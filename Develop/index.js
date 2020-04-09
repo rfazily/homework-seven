@@ -4,7 +4,7 @@ const util = require("util")
 
 const writeFileAsync = util.promisify(fs.writeFile)
 
-function promptUser(){
+function prompUser(){
    return inquirer.prompt([
     {
         type: "input",
@@ -53,47 +53,45 @@ function promptUser(){
 function generateTXT(answers) {
     return `
 ## Project Title
-${answers.title}
+${title}
 
 ## Description
-${answers.description}
+${description}
 
 ## Table of Contents
 
 ## Installation
-${answers.installation}
+${installation}
 
 ## Usage
-${answers.usage}
+${usage}
 
 ## License
-${answers.license}
+${license}
 
 ## Contributors
-${answers.contributors}
+${contributors}
 
 ## GitHub Profile Picture
-${answers.profilepic}
+${profilepic}
 
 ## GitHub Email
-${answers.email};` }
+${email}`;
+}
 
+async function init() {
+    console.log("Good README generator: please answer the questions below to create the file:")
+    try {
+      const answers = await promptUser();
+  
+      const txt = generateTXT(answers);
+  
+      await writeFileAsync("README.txt", txt);
+  
+      console.log("Successfully created your README.txt file");
+    } catch(err) {
+      console.log(err);
+    }
+  }
 
-      async function init() {
-            console.log("Good ReadME Generator: Please follow answer the questions below to generate your file.")
-            try {
-              const answers = await promptUser();
-          
-              const txt = generateTXT(answers);
-          
-              await writeFileAsync("README.txt", txt);
-          
-              console.log("Successfully wrote to README.txt");
-            } catch(err) {
-              console.log(err);
-            }
-          }
-          
-          init();
-
-// ------------------------------------
+  init();
