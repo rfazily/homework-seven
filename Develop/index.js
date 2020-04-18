@@ -1,10 +1,10 @@
 const inquirer = require("inquirer");
 const fs = require("fs");
-const util = require("util")
+const util = require("util");
 
 const writeFileAsync = util.promisify(fs.writeFile)
 
-function prompUser(){
+function promptUser(){
    return inquirer.prompt([
     {
         type: "input",
@@ -45,10 +45,20 @@ function prompUser(){
         type: "input",
         name: "email",
         message: "What is the github email address?"
+    },
+    {
+        type: "input",
+        name: "email",
+        message: "What is the github email address?",
+        validate: function( value ) {
+            if (value.length) {
+              return true;
+            } else {
+              return 'Please enter your username or e-mail address.';
+            }
+          }
     }
-
-   ]);
-}
+]);       
 
 function generateTXT(answers) {
     return `
@@ -79,9 +89,18 @@ ${profilepic}
 ${email}`;
 }
 
+// const run = async () => {
+//     const credentials = await inquirer.askGithubCredentials();
+//     console.log(credentials);
+//   };
+  
+//   run();
+
 async function init() {
     console.log("Good README generator: please answer the questions below to create the file:")
     try {
+
+     const answers = await inquirer.askGithubCredentials();
       const answers = await promptUser();
   
       const txt = generateTXT(answers);
