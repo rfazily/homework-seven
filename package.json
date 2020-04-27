@@ -1,0 +1,23 @@
+{
+  "name": "good-readme-generator",
+  "version": "1.0.0",
+  "description": "This is a command-line application that dynamically generates a README.md from a user's input. The application will be invoked with the following command:",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rfazily/homework-seven.git"
+  },
+  "keywords": [],
+  "author": "Rayhana Fazily",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rfazily/homework-seven/issues"
+  },
+  "homepage": "https://github.com/rfazily/homework-seven#readme",
+  "dependencies": {
+    "axios": "^0.19.2"
+  }
+}

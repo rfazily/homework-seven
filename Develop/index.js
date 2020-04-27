@@ -1,11 +1,11 @@
 const inquirer = require("inquirer");
 const fs = require("fs");
 const util = require("util");
+const api = require("./utils/api");
+const generateMarkdown = require("./utils/generateMarkdown");
+const path = require("path");
 
-const writeFileAsync = util.promisify(fs.writeFile)
-
-function promptUser(){
-   return inquirer.prompt([
+const questions = [
     {
         type: "input",
         name: "title",
@@ -27,9 +27,10 @@ function promptUser(){
         message: "Provide instructions and examples for use."
     },
     {
-        type: "input",
+        type: "list",
         name: "license",
-        message: "The last section of a good README is a license. This lets other developers know what they can and cannot do with your project. If you need help choosing a license, use https://choosealicense.com/"
+        message: "The last section of a good README is a license. This lets other developers know what they can and cannot do with your project. If you need help choosing a license, use https://choosealicense.com/",
+        choices: ["MIT", "Github", "Apache", "GPL", "None"]
     },
     {
         type: "input",
@@ -38,79 +39,19 @@ function promptUser(){
     },
     {
         type: "input",
-        name: "profilepic",
-        message: "Insert your profile pic"
-    },
-    {
-        type: "input",
         name: "email",
         message: "What is the github email address?"
-    },
-    {
-        type: "input",
-        name: "email",
-        message: "What is the github email address?",
-        validate: function( value ) {
-            if (value.length) {
-              return true;
-            } else {
-              return 'Please enter your username or e-mail address.';
-            }
-          }
     }
-]);       
+];
 
-function generateTXT(answers) {
-    return `
-## Project Title
-${title}
+//ADD ADDITIONAL QUESTION REGARDING USERNAME TO THAT PROFILE PIC AND REPO FIELDS WORK
 
-## Description
-${description}
-
-## Table of Contents
-
-## Installation
-${installation}
-
-## Usage
-${usage}
-
-## License
-${license}
-
-## Contributors
-${contributors}
-
-## GitHub Profile Picture
-${profilepic}
-
-## GitHub Email
-${email}`;
-}
-
-// const run = async () => {
-//     const credentials = await inquirer.askGithubCredentials();
-//     console.log(credentials);
-//   };
-  
-//   run();
-
-async function init() {
-    console.log("Good README generator: please answer the questions below to create the file:")
-    try {
-
-     const answers = await inquirer.askGithubCredentials();
-      const answers = await promptUser();
-  
-      const txt = generateTXT(answers);
-  
-      await writeFileAsync("README.txt", txt);
-  
-      console.log("Successfully created your README.txt file");
-    } catch(err) {
-      console.log(err);
-    }
+function writeToFile(fileName, data) {
+    return fs.writeFileSync(path.join(process.cwd(), fileName), data);
   }
-
-  init();
+  function init() {
+    inquirer.prompt(questions).then((inquirerResponses) => {
+      writeToFile("README.md", generateMarkdown({ ...inquirerResponses }));
+    })
+  }
+init();
