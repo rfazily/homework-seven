@@ -27,6 +27,9 @@ function licenseSection(license){
 //call it genderate markdown 
 function generateMarkdown(data) {
   return `
+## Github Username
+${data.github}
+
 ## Project Title
 ${data.title}
 ${renderLicense(data.license, data.github, data.title)}

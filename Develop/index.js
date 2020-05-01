@@ -1,6 +1,5 @@
 const inquirer = require("inquirer");
 const fs = require("fs");
-const util = require("util");
 const api = require("./utils/api");
 const generateMarkdown = require("./utils/generateMarkdown");
 const path = require("path");
@@ -8,8 +7,13 @@ const path = require("path");
 const questions = [
     {
         type: "input",
+        name: "github",
+        message: "What is your Github username?"
+    },
+    {
+        type: "input",
         name: "title",
-        message: "What is the Project Title?"
+        message: "What is the Project Title? (don't use spaces)"
     },
     {
         type: "input",
@@ -39,19 +43,28 @@ const questions = [
     },
     {
         type: "input",
+        name: "avatar_url",
+        message: "What is your github profile picture?"
+    },
+    {
+        type: "input",
         name: "email",
         message: "What is the github email address?"
     }
+   
 ];
-
-//ADD ADDITIONAL QUESTION REGARDING USERNAME TO THAT PROFILE PIC AND REPO FIELDS WORK
 
 function writeToFile(fileName, data) {
     return fs.writeFileSync(path.join(process.cwd(), fileName), data);
   }
   function init() {
     inquirer.prompt(questions).then((inquirerResponses) => {
-      writeToFile("README.md", generateMarkdown({ ...inquirerResponses }));
+
+      api
+      .getUser(inquirerResponses.github)
+      .then(({data}) => {
+        writeToFile("README.md", generateMarkdown({ ...inquirerResponses, ...data }));
+      })
     })
   }
 init();

@@ -1,17 +1,20 @@
 
+## Github Username
+rfazily
+
 ## Project Title
-homework-seven
-[![GitHub license](https://img.shields.io/badge/license-Github-blue.svg)](https://github.com/undefined/h-o-m-e-w-o-r-k---s-e-v-e-n)
+project6
+[![GitHub license](https://img.shields.io/badge/license-Github-blue.svg)](https://github.com/rfazily/project6)
 ## Description
-test
+
 
 ## Table of Contents
 
 ## Installation
-test
+
 
 ## Usage
-test
+
 
 ## License
 
@@ -19,11 +22,11 @@ test
     
 
 ## Contributors
-test
+
 
 ## GitHub Profile Picture
-<img src="undefined">
-console.log(undefined);
+<img src="https://avatars1.githubusercontent.com/u/59346425?v=4">
+console.log(https://avatars1.githubusercontent.com/u/59346425?v=4);
 
 ## GitHub Email
-rfazily@gmail.com
+null
